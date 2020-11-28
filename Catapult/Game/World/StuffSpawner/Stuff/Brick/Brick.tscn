@@ -1,0 +1,82 @@
+[gd_scene load_steps=9 format=2]
+
+[ext_resource path="res://Game/World/StuffSpawner/Stuff/Brick/brick.png" type="Texture" id=1]
+[ext_resource path="res://Game/World/StuffSpawner/Stuff/Brick/Brick.gd" type="Script" id=2]
+[ext_resource path="res://slkscre.ttf" type="DynamicFontData" id=3]
+[ext_resource path="res://Game/World/StuffSpawner/Stuff/Brick/mixkit-electronic-retro-block-hit-2185.wav" type="AudioStream" id=4]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 10, 3.5 )
+
+[sub_resource type="DynamicFont" id=2]
+size = 8
+outline_size = 1
+outline_color = Color( 0.152941, 0.152941, 0.266667, 1 )
+use_mipmaps = true
+extra_spacing_char = -2
+font_data = ExtResource( 3 )
+
+[sub_resource type="ParticlesMaterial" id=3]
+emission_shape = 2
+emission_box_extents = Vector3( 10, 3.5, 1 )
+flag_disable_z = true
+direction = Vector3( 0, -1, 0 )
+gravity = Vector3( 0, 60, 0 )
+initial_velocity = 44.2
+initial_velocity_random = 0.7
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+color = Color( 0.545098, 0.427451, 0.611765, 1 )
+
+[sub_resource type="AudioStreamRandomPitch" id=4]
+audio_stream = ExtResource( 4 )
+random_pitch = 1.03
+
+[node name="Brick" type="Node2D" groups=[
+"brick",
+]]
+script = ExtResource( 2 )
+worth = 15
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+centered = false
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 1024
+collision_mask = 1024
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+position = Vector2( 10, 3.5 )
+shape = SubResource( 1 )
+
+[node name="Label" type="Label" parent="."]
+visible = false
+margin_right = 40.0
+margin_bottom = 14.0
+custom_fonts/font = SubResource( 2 )
+custom_colors/font_color = Color( 0.984314, 0.960784, 0.937255, 1 )
+text = "+15"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="DespawnTimer" type="Timer" parent="."]
+one_shot = true
+
+[node name="Particles2D" type="Particles2D" parent="."]
+position = Vector2( 10, 3.5 )
+emitting = false
+amount = 10
+one_shot = true
+explosiveness = 0.9
+randomness = 1.0
+process_material = SubResource( 3 )
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource( 4 )
+volume_db = 10.0
+bus = "sound"
+[connection signal="timeout" from="DespawnTimer" to="." method="_on_DespawnTimer_timeout"]

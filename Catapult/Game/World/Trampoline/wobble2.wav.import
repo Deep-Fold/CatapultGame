@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/wobble2.wav-a115d93e38dfd72d6bd0d376c2d5608f.sample"
+
+[deps]
+
+source_file="res://Game/World/Trampoline/wobble2.wav"
+dest_files=[ "res://.import/wobble2.wav-a115d93e38dfd72d6bd0d376c2d5608f.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

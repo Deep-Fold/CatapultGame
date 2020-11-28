@@ -1,0 +1,183 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://Game/World/Cats/dangling.png" type="Texture" id=1]
+[ext_resource path="res://Game/World/Cats/Outline.shader" type="Shader" id=2]
+[ext_resource path="res://Game/Background/moon-lastframe.png" type="Texture" id=3]
+[ext_resource path="res://Game/EndAnimation/EndAnimation.gd" type="Script" id=4]
+[ext_resource path="res://Game/World/rat.png" type="Texture" id=5]
+[ext_resource path="res://Game/GUI/Theme.tres" type="Theme" id=6]
+[ext_resource path="res://slkscre.ttf" type="DynamicFontData" id=7]
+
+[sub_resource type="DynamicFont" id=1]
+size = 8
+extra_spacing_char = -2
+font_data = ExtResource( 7 )
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = ExtResource( 2 )
+shader_param/outline_color = Color( 0.286275, 0.301961, 0.494118, 1 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 1 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 1 )
+region = Rect2( 16, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 1 )
+region = Rect2( 32, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 1 )
+region = Rect2( 48, 0, 16, 16 )
+
+[sub_resource type="SpriteFrames" id=7]
+animations = [ {
+"frames": [ SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+} ]
+
+[sub_resource type="Animation" id=8]
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Cat:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 52, 47 ), Vector2( 52, 38 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 66, 48 ), Vector2( 66, 56 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Sprite2:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.5 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector2( 36, 48 ), Vector2( 36, 56 ) ]
+}
+
+[sub_resource type="ShaderMaterial" id=9]
+shader = ExtResource( 2 )
+shader_param/outline_color = Color( 0.152941, 0.152941, 0.266667, 1 )
+
+[node name="EndAnimation" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource( 4 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.152941, 0.152941, 0.266667, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="ColorRect"]
+margin_left = 25.0
+margin_top = 50.0
+margin_right = 75.0
+margin_bottom = 100.0
+rect_pivot_offset = Vector2( 25, 25 )
+texture = ExtResource( 3 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="ColorRect"]
+margin_top = 110.0
+margin_right = 100.0
+margin_bottom = 127.0
+rect_min_size = Vector2( 100, 0 )
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 1 )
+text = "Thanks for playing"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="ColorRect"]
+margin_top = 11.0
+margin_right = 100.0
+margin_bottom = 28.0
+rect_min_size = Vector2( 100, 0 )
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 1 )
+text = "Moon reached!"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="LaunchText" type="Label" parent="ColorRect"]
+margin_top = 23.0
+margin_right = 100.0
+margin_bottom = 32.0
+rect_min_size = Vector2( 100, 0 )
+size_flags_horizontal = 3
+custom_fonts/font = SubResource( 1 )
+text = "x launches"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Button" type="Button" parent="ColorRect"]
+margin_left = 20.0
+margin_top = 129.0
+margin_right = 80.0
+margin_bottom = 139.0
+theme = ExtResource( 6 )
+text = "play again?"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Cat" type="AnimatedSprite" parent="."]
+material = SubResource( 2 )
+position = Vector2( 52, 47 )
+frames = SubResource( 7 )
+frame = 3
+playing = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/default = SubResource( 8 )
+
+[node name="Sprite" type="Sprite" parent="."]
+material = SubResource( 9 )
+position = Vector2( 66, 48 )
+texture = ExtResource( 5 )
+
+[node name="Sprite2" type="Sprite" parent="."]
+material = SubResource( 9 )
+position = Vector2( 36, 48 )
+texture = ExtResource( 5 )
+[connection signal="pressed" from="ColorRect/Button" to="." method="_on_Button_pressed"]

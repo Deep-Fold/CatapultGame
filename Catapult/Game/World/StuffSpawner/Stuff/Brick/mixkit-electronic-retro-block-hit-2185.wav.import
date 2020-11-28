@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/mixkit-electronic-retro-block-hit-2185.wav-08eb56445fac4559b2bb71c6b93bab1d.sample"
+
+[deps]
+
+source_file="res://Game/World/StuffSpawner/Stuff/Brick/mixkit-electronic-retro-block-hit-2185.wav"
+dest_files=[ "res://.import/mixkit-electronic-retro-block-hit-2185.wav-08eb56445fac4559b2bb71c6b93bab1d.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

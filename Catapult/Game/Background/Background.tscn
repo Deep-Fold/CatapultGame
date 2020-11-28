@@ -1,0 +1,238 @@
+[gd_scene load_steps=16 format=2]
+
+[ext_resource path="res://Game/Background/mountain-right.png" type="Texture" id=1]
+[ext_resource path="res://Game/Background/mountain-left.png" type="Texture" id=2]
+[ext_resource path="res://Game/Background/star-particles.png" type="Texture" id=3]
+[ext_resource path="res://Game/Background/moon.png" type="Texture" id=4]
+[ext_resource path="res://Game/Background/cloud-particle.png" type="Texture" id=5]
+[ext_resource path="res://Game/Background/MoonLight.tres" type="Material" id=6]
+[ext_resource path="res://Game/Background/MountainReflect.tres" type="Material" id=7]
+[ext_resource path="res://Game/Background/CloudParticles.tres" type="Material" id=8]
+[ext_resource path="res://Game/Background/Stars.tres" type="Material" id=9]
+
+[sub_resource type="CanvasItemMaterial" id=1]
+particles_animation = true
+particles_anim_h_frames = 9
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="CanvasItemMaterial" id=5]
+particles_animation = true
+particles_anim_h_frames = 3
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Shader" id=10]
+code = "shader_type canvas_item;
+render_mode blend_mix;
+
+uniform sampler2D tex;
+uniform vec2 texture_size = vec2(58.0, 29.0);
+
+uniform int OCTAVES : hint_range(0, 100, 1);
+uniform float SIZE : hint_range(0, 50);
+uniform float seed: hint_range(1, 10);
+
+float rand(vec2 coord) {
+	return fract(sin(dot(coord, vec2(35, 62)) * 1000.0) * 1000.0 * seed);
+}
+
+float noise(vec2 coord){
+	vec2 i = floor(coord);
+	vec2 f = fract(coord);
+
+	// 4 corners of a rectangle surrounding our point
+	float a = rand(i);
+	float b = rand(i + vec2(1.0, 0.0));
+	float c = rand(i + vec2(0.0, 1.0));
+	float d = rand(i + vec2(1.0, 1.0));
+
+	vec2 cubic = f * f * (3.0 - 2.0 * f);
+
+	return mix(a, b, cubic.x) + (c - a) * cubic.y * (1.0 - cubic.x) + (d - b) * cubic.x * cubic.y;
+}
+
+float fbm(vec2 coord){
+	float value = 0.0;
+	float scale = 0.5;
+
+	for(int i = 0; i < OCTAVES ; i++){
+		value += noise(coord) * scale;
+		coord *= 2.0;
+		scale *= 0.5;
+	}
+	return value;
+}
+
+void fragment() {
+	vec2 uv = floor(UV * texture_size)/texture_size;
+	vec4 col = texture(tex, vec2(UV.x, 1.0-uv.y));
+	float fbm = fbm((uv*SIZE) - vec2(TIME,0.0)*0.2);
+	fbm *= (1.0 - uv.y);
+//	fbm *= (0.5 - abs(uv.x-0.5))*0.5;
+//
+	col.a *= step(1.0, mod(UV.y * texture_size.y, 2.0));
+	col.a *= step(0.3, fbm);
+	
+	COLOR = col;
+}"
+custom_defines = ""
+
+[sub_resource type="ShaderMaterial" id=12]
+shader = SubResource( 10 )
+shader_param/texture_size = Vector2( 19, 23 )
+shader_param/OCTAVES = 3
+shader_param/SIZE = 12.0
+shader_param/seed = 1.031
+shader_param/tex = ExtResource( 1 )
+
+[sub_resource type="Shader" id=13]
+code = "shader_type canvas_item;
+render_mode blend_mix;
+
+void fragment() {
+	vec4 col = vec4(1.0);
+	col.r = texture(SCREEN_TEXTURE, SCREEN_UV + vec2(0.002, 0.0)).r;
+	col.g = texture(SCREEN_TEXTURE, SCREEN_UV).g;
+	col.b = texture(SCREEN_TEXTURE, SCREEN_UV - vec2(0.002, 0.0)).b;
+	
+	COLOR = col;
+	
+}"
+custom_defines = ""
+
+[sub_resource type="ShaderMaterial" id=14]
+shader = SubResource( 13 )
+
+[node name="Control" type="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BackgroundColor" type="ColorRect" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color( 0.152941, 0.152941, 0.266667, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Stars" type="Particles2D" parent="."]
+visible = false
+material = SubResource( 1 )
+position = Vector2( 50, 55 )
+amount = 10
+lifetime = 30.0
+preprocess = 30.0
+process_material = ExtResource( 9 )
+texture = ExtResource( 3 )
+
+[node name="Clouds" type="Particles2D" parent="."]
+visible = false
+material = SubResource( 5 )
+position = Vector2( -40, 75 )
+amount = 10
+lifetime = 60.0
+preprocess = 60.0
+visibility_rect = Rect2( -100, -100, 400, 200 )
+process_material = ExtResource( 8 )
+texture = ExtResource( 5 )
+
+[node name="mountain-right" type="Sprite" parent="."]
+visible = false
+position = Vector2( 81, 99 )
+texture = ExtResource( 1 )
+centered = false
+
+[node name="mountain-left" type="Sprite" parent="."]
+visible = false
+position = Vector2( 0, 89 )
+texture = ExtResource( 2 )
+centered = false
+
+[node name="Sea" type="ColorRect" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 121.0
+mouse_filter = 2
+color = Color( 0.286275, 0.301961, 0.494118, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sea2" type="ColorRect" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 20.0
+margin_top = 121.0
+margin_right = -20.0
+margin_bottom = -28.0
+mouse_filter = 2
+color = Color( 0.984314, 0.960784, 0.937255, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MoonShader" type="ColorRect" parent="."]
+visible = false
+material = ExtResource( 6 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 46.0
+margin_top = 122.0
+margin_right = -19.0
+margin_bottom = 1.0
+mouse_filter = 2
+color = Color( 0.286275, 0.301961, 0.494118, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MountainReflect" type="ColorRect" parent="."]
+visible = false
+material = ExtResource( 7 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 121.0
+margin_right = -81.0
+margin_bottom = 3.0
+mouse_filter = 2
+color = Color( 0.286275, 0.301961, 0.494118, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MountainReflect2" type="ColorRect" parent="."]
+visible = false
+material = SubResource( 12 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 81.0
+margin_top = 121.0
+margin_bottom = -6.0
+mouse_filter = 2
+color = Color( 0.286275, 0.301961, 0.494118, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="moon" type="Sprite" parent="."]
+position = Vector2( 56, 30 )
+texture = ExtResource( 4 )
+centered = false
+
+[node name="ColorRect3" type="ColorRect" parent="."]
+visible = false
+material = SubResource( 14 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}

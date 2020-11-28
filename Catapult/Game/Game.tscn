@@ -1,0 +1,444 @@
+[gd_scene load_steps=34 format=2]
+
+[ext_resource path="res://Game/World/World.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Game/ForeGround/ground.png" type="Texture" id=2]
+[ext_resource path="res://Game/GUI/MilkInfo.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Game/Background/mountain-right.png" type="Texture" id=4]
+[ext_resource path="res://Game/Background/mountain-left.png" type="Texture" id=5]
+[ext_resource path="res://Game/EndAnimation/EndAnimation.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Game/Background/MoonLight.tres" type="Material" id=7]
+[ext_resource path="res://Game/Background/cloud-particle.png" type="Texture" id=8]
+[ext_resource path="res://Game/Background/CloudParticles.tres" type="Material" id=9]
+[ext_resource path="res://Game/Background/star-particles.png" type="Texture" id=10]
+[ext_resource path="res://Game/Background/Stars.tres" type="Material" id=11]
+[ext_resource path="res://Game/GUI/Shop.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Game/GUI/Theme.tres" type="Theme" id=13]
+[ext_resource path="res://Game/Game.gd" type="Script" id=14]
+[ext_resource path="res://Game/GUI/ShopPanel.gd" type="Script" id=15]
+[ext_resource path="res://slkscre.ttf" type="DynamicFontData" id=16]
+[ext_resource path="res://Game/GUI/fish4.png" type="Texture" id=17]
+[ext_resource path="res://Game/GUI/MoneyLabel.gd" type="Script" id=18]
+[ext_resource path="res://Game/Background/ReflectTexture.shader" type="Shader" id=19]
+[ext_resource path="res://Game/GUI/audio-on.png" type="Texture" id=20]
+[ext_resource path="res://Game/GUI/music-on.png" type="Texture" id=21]
+
+[sub_resource type="CanvasItemMaterial" id=1]
+particles_animation = true
+particles_anim_h_frames = 9
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="ShaderMaterial" id=2]
+shader = ExtResource( 19 )
+shader_param/noiseSize = 15.0
+shader_param/speed = -0.4
+shader_param/albedo = 0.7
+
+[sub_resource type="ShaderMaterial" id=3]
+shader = ExtResource( 19 )
+shader_param/noiseSize = 15.47
+shader_param/speed = -0.4
+shader_param/albedo = 0.7
+
+[sub_resource type="CanvasItemMaterial" id=4]
+particles_animation = true
+particles_anim_h_frames = 3
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="DynamicFont" id=5]
+size = 8
+outline_size = 1
+use_mipmaps = true
+extra_spacing_char = -2
+font_data = ExtResource( 16 )
+
+[sub_resource type="DynamicFont" id=6]
+font_data = ExtResource( 16 )
+
+[sub_resource type="DynamicFont" id=7]
+size = 8
+outline_size = 1
+outline_color = Color( 0.152941, 0.152941, 0.266667, 1 )
+use_mipmaps = true
+extra_spacing_char = -2
+font_data = ExtResource( 16 )
+
+[sub_resource type="StyleBoxFlat" id=9]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="StyleBoxFlat" id=10]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="StyleBoxFlat" id=11]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[sub_resource type="DynamicFont" id=12]
+
+[sub_resource type="Animation" id=8]
+resource_name = "fade"
+tracks/0/type = "value"
+tracks/0/path = NodePath("CanvasLayer/Fade:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 0 ) ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("CanvasLayer/EndAnimation:visible")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.4, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, false, true, true ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("CanvasLayer/EndAnimation:modulate")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 0.4, 0.5, 1 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 0 ), Color( 1, 1, 1, 1 ), Color( 1, 1, 1, 1 ) ]
+}
+
+[node name="Game" type="Node"]
+script = ExtResource( 14 )
+
+[node name="BackgroundColor" type="CanvasLayer" parent="."]
+layer = -10
+
+[node name="ColorRect" type="ColorRect" parent="BackgroundColor"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color( 0.152941, 0.152941, 0.266667, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ParallaxBackground" type="ParallaxBackground" parent="."]
+layer = 0
+
+[node name="Sky" type="ParallaxLayer" parent="ParallaxBackground"]
+motion_scale = Vector2( 1, 0.3 )
+motion_mirroring = Vector2( 0, 150 )
+
+[node name="Stars" type="Particles2D" parent="ParallaxBackground/Sky"]
+material = SubResource( 1 )
+position = Vector2( 50, 55 )
+amount = 10
+lifetime = 30.0
+preprocess = 30.0
+process_material = ExtResource( 11 )
+texture = ExtResource( 10 )
+
+[node name="OceanView" type="ParallaxLayer" parent="ParallaxBackground"]
+
+[node name="mountain-left" type="Sprite" parent="ParallaxBackground/OceanView"]
+position = Vector2( 0, 89 )
+texture = ExtResource( 5 )
+centered = false
+
+[node name="mountain-right" type="Sprite" parent="ParallaxBackground/OceanView"]
+position = Vector2( 81, 99 )
+texture = ExtResource( 4 )
+centered = false
+
+[node name="Ocean" type="ColorRect" parent="ParallaxBackground/OceanView"]
+margin_top = 121.0
+margin_right = 100.0
+margin_bottom = 149.0
+mouse_filter = 2
+color = Color( 0.286275, 0.301961, 0.494118, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MoonStripe" type="ColorRect" parent="ParallaxBackground/OceanView"]
+margin_left = 20.0
+margin_top = 121.0
+margin_right = 80.0
+margin_bottom = 122.0
+mouse_filter = 2
+color = Color( 0.984314, 0.960784, 0.937255, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MoonLight" type="ColorRect" parent="ParallaxBackground/OceanView"]
+material = ExtResource( 7 )
+margin_left = 48.0
+margin_top = 122.0
+margin_right = 83.0
+margin_bottom = 151.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MountainReflect2" type="Sprite" parent="ParallaxBackground/OceanView"]
+material = SubResource( 2 )
+position = Vector2( 81, 121 )
+texture = ExtResource( 4 )
+centered = false
+
+[node name="MountainReflect3" type="Sprite" parent="ParallaxBackground/OceanView"]
+material = SubResource( 3 )
+position = Vector2( 0, 121 )
+texture = ExtResource( 5 )
+centered = false
+
+[node name="Clouds" type="ParallaxBackground" parent="."]
+layer = -1
+
+[node name="Clouds" type="ParallaxLayer" parent="Clouds"]
+motion_scale = Vector2( 1, 0.6 )
+
+[node name="Particles2D" type="Particles2D" parent="Clouds/Clouds"]
+material = SubResource( 4 )
+position = Vector2( -40, 45 )
+amount = 10
+lifetime = 60.0
+preprocess = 60.0
+process_material = ExtResource( 9 )
+texture = ExtResource( 8 )
+
+[node name="GameLayer" type="CanvasLayer" parent="."]
+layer = 2
+follow_viewport_enable = true
+
+[node name="World" parent="GameLayer" instance=ExtResource( 1 )]
+
+[node name="ForeGround" type="CanvasLayer" parent="."]
+layer = 3
+follow_viewport_enable = true
+
+[node name="Sprite" type="Sprite" parent="ForeGround"]
+position = Vector2( 50, 148 )
+texture = ExtResource( 2 )
+
+[node name="UI" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="Control" type="Control" parent="UI"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MilkInfo" parent="UI/Control" instance=ExtResource( 3 )]
+visible = false
+
+[node name="ShopPanel" type="Panel" parent="UI/Control"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+theme = ExtResource( 13 )
+script = ExtResource( 15 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Shop" parent="UI/Control/ShopPanel" instance=ExtResource( 12 )]
+
+[node name="ShopButton" type="Button" parent="UI/Control"]
+margin_left = -1.0
+margin_top = -1.0
+margin_right = 23.0
+margin_bottom = 8.0
+focus_mode = 0
+theme = ExtResource( 13 )
+enabled_focus_mode = 0
+text = "shop"
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="UI/Control/ShopButton"]
+bus = "sound"
+
+[node name="Money" type="Label" parent="UI/Control"]
+margin_left = 67.0
+margin_right = 88.0
+margin_bottom = 9.0
+custom_fonts/font = SubResource( 5 )
+custom_colors/font_color = Color( 0.984314, 0.960784, 0.937255, 1 )
+custom_colors/font_outline_modulate = Color( 0.152941, 0.152941, 0.266667, 1 )
+text = "0"
+align = 2
+script = ExtResource( 18 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="UI/Control/Money"]
+margin_left = 24.0
+margin_top = 2.0
+margin_right = 31.0
+margin_bottom = 7.0
+texture = ExtResource( 17 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="UI"]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = -29.0
+custom_fonts/font = SubResource( 6 )
+custom_colors/font_color = Color( 0.984314, 0.960784, 0.937255, 1 )
+text = "CAT
+APULT"
+align = 1
+valign = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Tutorial" type="Control" parent="UI"]
+margin_right = 40.0
+margin_bottom = 40.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DragCat" type="Label" parent="UI/Tutorial"]
+visible = false
+margin_left = 1.0
+margin_top = 53.0
+margin_right = 101.0
+margin_bottom = 74.0
+rect_min_size = Vector2( 100, 0 )
+custom_fonts/font = SubResource( 7 )
+custom_colors/font_color = Color( 0.984314, 0.960784, 0.937255, 1 )
+text = "drag cat into catapult
+and let go to launch"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="DragTrampoline" type="Label" parent="UI/Tutorial"]
+visible = false
+margin_top = 40.0
+margin_right = 100.0
+margin_bottom = 85.0
+rect_min_size = Vector2( 100, 0 )
+custom_fonts/font = SubResource( 7 )
+custom_colors/font_color = Color( 0.984314, 0.960784, 0.937255, 1 )
+text = "drag mouse under cat
+to create a trampoline
+
+this uses milk (topleft)"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Shop" type="Label" parent="UI/Tutorial"]
+visible = false
+margin_left = 1.0
+margin_top = 93.0
+margin_right = 101.0
+margin_bottom = 102.0
+custom_fonts/font = SubResource( 7 )
+custom_colors/font_color = Color( 0.984314, 0.960784, 0.937255, 1 )
+text = "click topleft to shop"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MouseCatch" type="Control" parent="UI/Tutorial/Shop"]
+margin_left = -1.0
+margin_top = -4.0
+margin_right = 99.0
+margin_bottom = 57.0
+rect_min_size = Vector2( 100, 50 )
+
+[node name="AudioToggle" type="Button" parent="UI"]
+margin_left = 92.0
+margin_top = 16.0
+margin_right = 100.0
+margin_bottom = 24.0
+focus_mode = 0
+custom_styles/hover = SubResource( 9 )
+custom_styles/pressed = SubResource( 10 )
+custom_styles/normal = SubResource( 11 )
+custom_fonts/font = SubResource( 12 )
+enabled_focus_mode = 0
+icon = ExtResource( 20 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="MusicToggle" type="Button" parent="UI"]
+margin_left = 92.0
+margin_top = 8.0
+margin_right = 100.0
+margin_bottom = 16.0
+focus_mode = 0
+custom_styles/hover = SubResource( 9 )
+custom_styles/pressed = SubResource( 10 )
+custom_styles/normal = SubResource( 11 )
+custom_fonts/font = SubResource( 12 )
+enabled_focus_mode = 0
+icon = ExtResource( 21 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+layer = 5
+
+[node name="EndAnimation" parent="CanvasLayer" instance=ExtResource( 6 )]
+visible = false
+modulate = Color( 1, 1, 1, 0 )
+
+[node name="Fade" type="ColorRect" parent="CanvasLayer"]
+visible = false
+modulate = Color( 1, 1, 1, 0 )
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+color = Color( 0.152941, 0.152941, 0.266667, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="EndAnimation" type="AnimationPlayer" parent="."]
+anims/fade = SubResource( 8 )
+
+[node name="ResetWorld" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+[connection signal="hide_milk_bar" from="GameLayer/World" to="UI/Control/MilkInfo" method="_on_World_hide_milk_bar"]
+[connection signal="hide_milk_bar" from="GameLayer/World" to="UI/Control/ShopPanel" method="_on_World_hide_milk_bar"]
+[connection signal="launched" from="GameLayer/World" to="." method="_on_World_launched"]
+[connection signal="madetrampoline" from="GameLayer/World" to="." method="_on_World_madetrampoline"]
+[connection signal="reached_moon" from="GameLayer/World" to="." method="_on_World_reached_moon"]
+[connection signal="show_launch_tutorial" from="GameLayer/World" to="." method="_on_World_show_launch_tutorial"]
+[connection signal="show_milk_bar" from="GameLayer/World" to="UI/Control/MilkInfo" method="_on_World_show_milk_bar"]
+[connection signal="show_milk_bar" from="GameLayer/World" to="UI/Control/ShopPanel" method="_on_World_show_milk_bar"]
+[connection signal="show_shop_tutorial" from="GameLayer/World" to="." method="_on_World_show_shop_tutorial"]
+[connection signal="show_trampoline_tutorial" from="GameLayer/World" to="." method="_on_World_show_trampoline_tutorial"]
+[connection signal="update_milk" from="GameLayer/World" to="UI/Control/MilkInfo" method="_on_World_update_milk"]
+[connection signal="pressed" from="UI/Control/ShopButton" to="UI/Control/ShopPanel" method="_on_ShopButton_pressed"]
+[connection signal="pressed" from="UI/Control/ShopButton" to="." method="_on_ShopButton_pressed"]
+[connection signal="pressed" from="UI/AudioToggle" to="." method="_on_AudioToggle_pressed"]
+[connection signal="pressed" from="UI/MusicToggle" to="." method="_on_MusicToggle_pressed"]
+[connection signal="play_again" from="CanvasLayer/EndAnimation" to="." method="_on_EndAnimation_play_again"]
+[connection signal="timeout" from="ResetWorld" to="." method="_on_ResetWorld_timeout"]

@@ -1,0 +1,118 @@
+[gd_scene load_steps=8 format=2]
+
+[ext_resource path="res://Game/GUI/upgrade-unchecked.png" type="Texture" id=1]
+[ext_resource path="res://Game/GUI/fish4.png" type="Texture" id=2]
+[ext_resource path="res://Game/GUI/upgrade-checked.png" type="Texture" id=3]
+[ext_resource path="res://Game/GUI/Theme.tres" type="Theme" id=4]
+[ext_resource path="res://Game/GUI/UpgradeNode.gd" type="Script" id=5]
+[ext_resource path="res://Game/GUI/mixkit-video-game-mystery-alert-234.wav" type="AudioStream" id=6]
+
+[sub_resource type="StyleBoxFlat" id=1]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
+[node name="UpgradeNode" type="VBoxContainer"]
+margin_right = 94.0
+margin_bottom = 118.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+script = ExtResource( 5 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Panel" type="Panel" parent="."]
+margin_right = 94.0
+margin_bottom = 118.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+theme = ExtResource( 4 )
+
+[node name="Label" type="Label" parent="Panel"]
+margin_top = 1.0
+margin_right = 45.0
+margin_bottom = 8.0
+size_flags_horizontal = 3
+theme = ExtResource( 4 )
+custom_styles/normal = SubResource( 1 )
+custom_colors/font_color = Color( 0.152941, 0.152941, 0.266667, 1 )
+text = "milk PWR"
+align = 1
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HBoxContainer" type="HBoxContainer" parent="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 8.0
+margin_right = -1.0
+margin_bottom = -103.0
+size_flags_horizontal = 3
+size_flags_vertical = 3
+custom_constants/separation = 0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Panel/HBoxContainer"]
+margin_right = 23.0
+margin_bottom = 7.0
+size_flags_horizontal = 3
+texture = ExtResource( 3 )
+stretch_mode = 4
+
+[node name="TextureRect2" type="TextureRect" parent="Panel/HBoxContainer"]
+margin_left = 23.0
+margin_right = 46.0
+margin_bottom = 7.0
+size_flags_horizontal = 3
+texture = ExtResource( 1 )
+stretch_mode = 4
+
+[node name="TextureRect3" type="TextureRect" parent="Panel/HBoxContainer"]
+margin_left = 46.0
+margin_right = 69.0
+margin_bottom = 7.0
+size_flags_horizontal = 3
+texture = ExtResource( 1 )
+stretch_mode = 4
+
+[node name="TextureRect4" type="TextureRect" parent="Panel/HBoxContainer"]
+margin_left = 69.0
+margin_right = 93.0
+margin_bottom = 7.0
+size_flags_horizontal = 3
+texture = ExtResource( 1 )
+stretch_mode = 4
+
+[node name="Button" type="Button" parent="Panel"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 3.0
+margin_top = 15.0
+margin_right = -3.0
+margin_bottom = -2.0
+focus_mode = 0
+theme = ExtResource( 4 )
+enabled_focus_mode = 0
+text = "x500 "
+align = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TextureRect" type="TextureRect" parent="Panel/Button"]
+margin_left = 7.0
+margin_top = 2.0
+margin_right = 14.0
+margin_bottom = 7.0
+texture = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 6 )
+volume_db = 5.0
+bus = "sound"
+[connection signal="pressed" from="Panel/Button" to="." method="_on_Button_pressed"]

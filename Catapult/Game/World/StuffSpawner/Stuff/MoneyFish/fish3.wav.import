@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/fish3.wav-2b33e7c3a2e4de5f6fb402fb63c088dd.sample"
+
+[deps]
+
+source_file="res://Game/World/StuffSpawner/Stuff/MoneyFish/fish3.wav"
+dest_files=[ "res://.import/fish3.wav-2b33e7c3a2e4de5f6fb402fb63c088dd.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

@@ -1,0 +1,461 @@
+[gd_scene load_steps=31 format=2]
+
+[ext_resource path="res://Game/World/Catapult/Catapult.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Game/World/Cats/Olin/Olin.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Game/World/World.gd" type="Script" id=3]
+[ext_resource path="res://Game/World/Camera2D.gd" type="Script" id=4]
+[ext_resource path="res://Game/Background/moon.png" type="Texture" id=5]
+[ext_resource path="res://Game/World/BounceLineDrawer.gd" type="Script" id=6]
+[ext_resource path="res://Game/World/StuffSpawner/LaunchStuffSpawner.tscn" type="PackedScene" id=7]
+[ext_resource path="res://slkscre.ttf" type="DynamicFontData" id=8]
+[ext_resource path="res://Game/World/Cats/launch-particles.png" type="Texture" id=9]
+[ext_resource path="res://Game/GUI/Theme.tres" type="Theme" id=10]
+[ext_resource path="res://Game/launch.ogg" type="AudioStream" id=11]
+[ext_resource path="res://Game/calm.ogg" type="AudioStream" id=12]
+[ext_resource path="res://Game/World/mixkit-arcade-retro-game-over-213.wav" type="AudioStream" id=13]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 5 )
+region = Rect2( 0, 0, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 5 )
+region = Rect2( 50, 0, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 5 )
+region = Rect2( 100, 0, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 5 )
+region = Rect2( 150, 0, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 5 )
+region = Rect2( 200, 0, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 5 )
+region = Rect2( 250, 0, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 5 )
+region = Rect2( 300, 0, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 5 )
+region = Rect2( 350, 0, 50, 50 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 5 )
+region = Rect2( 400, 0, 50, 50 )
+
+[sub_resource type="SpriteFrames" id=10]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ), SubResource( 9 ) ],
+"loop": true,
+"name": "default",
+"speed": 2.0
+} ]
+
+[sub_resource type="DynamicFont" id=11]
+outline_size = 1
+outline_color = Color( 0.152941, 0.152941, 0.266667, 1 )
+use_mipmaps = true
+extra_spacing_top = -3
+extra_spacing_bottom = -4
+extra_spacing_char = -3
+font_data = ExtResource( 8 )
+
+[sub_resource type="DynamicFont" id=12]
+size = 8
+outline_size = 1
+outline_color = Color( 0.152941, 0.152941, 0.266667, 1 )
+use_mipmaps = true
+extra_spacing_top = -3
+extra_spacing_bottom = -4
+extra_spacing_char = -2
+font_data = ExtResource( 8 )
+
+[sub_resource type="Animation" id=13]
+resource_name = "intro"
+length = 21.0
+tracks/0/type = "value"
+tracks/0/path = NodePath("Cats/Cat/AnimatedSprite:animation")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 1.7, 1.8, 14.3, 14.4, 16.3, 16.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ "walking", "walking", "idle", "idle", "walking", "walking", "idle" ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Cats/Cat:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 1.7, 14.4, 16.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( -10, 140 ), Vector2( 18, 140 ), Vector2( 18, 140 ), Vector2( 40, 140 ) ]
+}
+tracks/2/type = "value"
+tracks/2/path = NodePath("Catapult:position")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/keys = {
+"times": PoolRealArray( 0, 16.5, 18 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 50, 190 ), Vector2( 50, 190 ), Vector2( 50, 136 ) ]
+}
+tracks/3/type = "value"
+tracks/3/path = NodePath("Particles2D:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/keys = {
+"times": PoolRealArray( 0, 16.5, 16.6, 18.1, 18.2 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, false, true, true, false ]
+}
+tracks/4/type = "value"
+tracks/4/path = NodePath("Particles2D:position")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/keys = {
+"times": PoolRealArray( 0, 16.6, 18.1 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 50, 170 ), Vector2( 50, 160 ), Vector2( 50, 110 ) ]
+}
+tracks/5/type = "value"
+tracks/5/path = NodePath("Particles2D:process_material:emission_box_extents")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/keys = {
+"times": PoolRealArray( 16.6, 18.1 ),
+"transitions": PoolRealArray( 1, 1 ),
+"update": 0,
+"values": [ Vector3( 5, 1, 1 ), Vector3( 5, 30, 1 ) ]
+}
+tracks/6/type = "value"
+tracks/6/path = NodePath("OpeningAnimationText/Label:visible")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/keys = {
+"times": PoolRealArray( 0, 2.4, 2.5, 4.5, 4.6 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, false, true, true, false ]
+}
+tracks/7/type = "value"
+tracks/7/path = NodePath("OpeningAnimationText/Label3:visible")
+tracks/7/interp = 1
+tracks/7/loop_wrap = true
+tracks/7/imported = false
+tracks/7/enabled = true
+tracks/7/keys = {
+"times": PoolRealArray( 0, 4.5, 4.6, 5.6, 5.7 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, false, true, true, false ]
+}
+tracks/8/type = "value"
+tracks/8/path = NodePath("OpeningAnimationText/Label2:visible")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/keys = {
+"times": PoolRealArray( 0, 8.2, 8.3, 14.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, false, true, false ]
+}
+tracks/9/type = "value"
+tracks/9/path = NodePath("OpeningAnimationText/Label2:text")
+tracks/9/interp = 1
+tracks/9/loop_wrap = true
+tracks/9/imported = false
+tracks/9/enabled = true
+tracks/9/keys = {
+"times": PoolRealArray( 8.3, 10.2, 12.2 ),
+"transitions": PoolRealArray( 1, 1, 1 ),
+"update": 1,
+"values": [ "moon = cheese", "moon = cheese
+cheese = mouse", "moon = cheese
+cheese = mouse
+mouse = food" ]
+}
+tracks/10/type = "value"
+tracks/10/path = NodePath("OpeningAnimationText/Label4:visible")
+tracks/10/interp = 1
+tracks/10/loop_wrap = true
+tracks/10/imported = false
+tracks/10/enabled = true
+tracks/10/keys = {
+"times": PoolRealArray( 0, 18.8, 18.9, 20.8, 20.9 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, false, true, true, false ]
+}
+tracks/11/type = "value"
+tracks/11/path = NodePath("OpeningAnimationText/Label5:visible")
+tracks/11/interp = 1
+tracks/11/loop_wrap = true
+tracks/11/imported = false
+tracks/11/enabled = true
+tracks/11/keys = {
+"times": PoolRealArray( 0, 6.7, 6.8, 8.3, 8.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 1,
+"values": [ false, false, true, true, false ]
+}
+
+[sub_resource type="CanvasItemMaterial" id=14]
+particles_animation = true
+particles_anim_h_frames = 7
+particles_anim_v_frames = 1
+particles_anim_loop = false
+
+[sub_resource type="Curve" id=15]
+_data = [ Vector2( 0, 1 ), 0.0, 0.0, 0, 0, Vector2( 1, 0 ), 0.0, 0.0, 0, 0 ]
+
+[sub_resource type="CurveTexture" id=16]
+curve = SubResource( 15 )
+
+[sub_resource type="ParticlesMaterial" id=17]
+emission_shape = 2
+emission_box_extents = Vector3( 5, 30, 1 )
+flag_disable_z = true
+spread = 180.0
+gravity = Vector3( 0, 0, 0 )
+initial_velocity = 10.0
+orbit_velocity = 0.0
+orbit_velocity_random = 0.0
+scale_curve = SubResource( 16 )
+
+[node name="World" type="Node2D"]
+script = ExtResource( 3 )
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="moon" type="AnimatedSprite" parent="CanvasLayer"]
+position = Vector2( 65, 29 )
+frames = SubResource( 10 )
+
+[node name="Catapult" parent="." instance=ExtResource( 1 )]
+position = Vector2( 50, 190 )
+
+[node name="Cats" type="Node2D" parent="."]
+
+[node name="Cat" parent="Cats" instance=ExtResource( 2 )]
+position = Vector2( -10, 140 )
+
+[node name="AnimatedSprite" parent="Cats/Cat" index="1"]
+animation = "walking"
+frame = 1
+
+[node name="Trampolines" type="Node2D" parent="."]
+
+[node name="Camera2D" type="Camera2D" parent="."]
+position = Vector2( 50, 75 )
+current = true
+script = ExtResource( 4 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="BounceLineDrawer" type="Node2D" parent="."]
+pause_mode = 2
+script = ExtResource( 6 )
+
+[node name="Outline" type="Line2D" parent="BounceLineDrawer"]
+points = PoolVector2Array( 0, 0, 0, 0 )
+width = 4.0
+default_color = Color( 0.152941, 0.152941, 0.266667, 1 )
+
+[node name="Line2D" type="Line2D" parent="BounceLineDrawer"]
+points = PoolVector2Array( 0, 0, 0, 0 )
+width = 2.0
+default_color = Color( 0.984314, 0.960784, 0.937255, 1 )
+
+[node name="LaunchStuffSpawner" parent="." instance=ExtResource( 7 )]
+
+[node name="Control" type="Control" parent="."]
+visible = false
+anchor_right = 1.0
+anchor_bottom = 1.0
+mouse_filter = 2
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Control"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 40.0
+margin_right = 100.0
+margin_bottom = 100.0
+rect_min_size = Vector2( 100, 100 )
+mouse_filter = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="HowFar" type="Label" parent="Control/VBoxContainer"]
+margin_right = 100.0
+margin_bottom = 10.0
+custom_fonts/font = SubResource( 11 )
+custom_colors/font_color = Color( 0.984314, 0.960784, 0.937255, 1 )
+text = "5000m"
+align = 1
+
+[node name="Label2" type="Label" parent="Control/VBoxContainer"]
+margin_top = 14.0
+margin_right = 100.0
+margin_bottom = 24.0
+rect_min_size = Vector2( 0, 10 )
+custom_fonts/font = SubResource( 12 )
+custom_colors/font_color = Color( 0.984314, 0.960784, 0.937255, 1 )
+text = "achieved"
+align = 1
+
+[node name="ToGo" type="Label" parent="Control/VBoxContainer"]
+margin_top = 28.0
+margin_right = 100.0
+margin_bottom = 38.0
+custom_fonts/font = SubResource( 11 )
+custom_colors/font_color = Color( 0.984314, 0.960784, 0.937255, 1 )
+text = "4000m"
+align = 1
+
+[node name="Label4" type="Label" parent="Control/VBoxContainer"]
+margin_top = 42.0
+margin_right = 100.0
+margin_bottom = 44.0
+custom_fonts/font = SubResource( 12 )
+custom_colors/font_color = Color( 0.984314, 0.960784, 0.937255, 1 )
+text = "more to the moon"
+align = 1
+
+[node name="HideHeight" type="Timer" parent="."]
+wait_time = 4.0
+one_shot = true
+
+[node name="OpeningAnimation" type="AnimationPlayer" parent="."]
+anims/intro = SubResource( 13 )
+
+[node name="Particles2D" type="Particles2D" parent="."]
+material = SubResource( 14 )
+position = Vector2( 50, 170 )
+emitting = false
+amount = 20
+process_material = SubResource( 17 )
+texture = ExtResource( 9 )
+
+[node name="OpeningAnimationText" type="Control" parent="."]
+margin_right = 40.0
+margin_bottom = 40.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label" type="Label" parent="OpeningAnimationText"]
+visible = false
+margin_left = 32.0
+margin_top = 77.0
+margin_right = 68.0
+margin_bottom = 86.0
+theme = ExtResource( 10 )
+text = "hungry"
+
+[node name="Label3" type="Label" parent="OpeningAnimationText"]
+visible = false
+margin_left = 44.0
+margin_top = 77.0
+margin_right = 57.0
+margin_bottom = 86.0
+theme = ExtResource( 10 )
+text = " . . . "
+
+[node name="Label5" type="Label" parent="OpeningAnimationText"]
+visible = false
+margin_left = 46.0
+margin_top = 76.0
+margin_right = 55.0
+margin_bottom = 85.0
+theme = ExtResource( 10 )
+text = " ! "
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="OpeningAnimationText"]
+visible = false
+margin_left = 19.0
+margin_top = 75.0
+margin_right = 81.0
+margin_bottom = 84.0
+theme = ExtResource( 10 )
+text = "moon = cheese"
+
+[node name="Label4" type="Label" parent="OpeningAnimationText"]
+visible = false
+margin_left = 11.0
+margin_top = 75.0
+margin_right = 89.0
+margin_bottom = 84.0
+theme = ExtResource( 10 )
+text = "shoot to the moon!"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AnimationOver" type="Timer" parent="."]
+wait_time = 21.0
+one_shot = true
+autostart = true
+
+[node name="CalmMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )
+autoplay = true
+bus = "music"
+
+[node name="LaunchMusic" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 11 )
+volume_db = -80.0
+bus = "music"
+
+[node name="CatFall" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 13 )
+volume_db = 5.0
+bus = "sound"
+[connection signal="cat_falling" from="Camera2D" to="." method="_on_Camera2D_cat_falling"]
+[connection signal="change_height" from="Camera2D" to="." method="_on_Camera2D_change_height"]
+[connection signal="change_height" from="Camera2D" to="BounceLineDrawer" method="_on_Camera2D_change_height"]
+[connection signal="change_height" from="Camera2D" to="LaunchStuffSpawner" method="_on_Camera2D_change_height"]
+[connection signal="made_trampoline" from="BounceLineDrawer" to="." method="_on_BounceLineDrawer_made_trampoline"]
+[connection signal="remove_milk" from="BounceLineDrawer" to="." method="_on_BounceLineDrawer_remove_milk"]
+[connection signal="visual_change_milk" from="BounceLineDrawer" to="." method="_on_BounceLineDrawer_visual_change_milk"]
+[connection signal="timeout" from="HideHeight" to="." method="_on_HideHeight_timeout"]
+[connection signal="timeout" from="AnimationOver" to="." method="_on_AnimationOver_timeout"]
+
+[editable path="Cats/Cat"]

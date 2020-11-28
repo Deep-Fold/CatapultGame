@@ -1,0 +1,34 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Game/World/StuffSpawner/Stuff/MilkBowl/milk-bowl.png" type="Texture" id=1]
+[ext_resource path="res://Game/World/StuffSpawner/Stuff/MilkBowl/MilkBowl.gd" type="Script" id=2]
+[ext_resource path="res://Game/World/StuffSpawner/Stuff/MilkBowl/mixkit-unlock-game-notification-253.wav" type="AudioStream" id=3]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 4, 4 )
+
+[sub_resource type="AudioStreamRandomPitch" id=2]
+audio_stream = ExtResource( 3 )
+random_pitch = 1.03
+
+[node name="MilkBowl" type="Node2D" groups=[
+"milkbowl",
+]]
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 1 )
+
+[node name="Area2D" type="Area2D" parent="."]
+collision_layer = 2147485696
+collision_mask = 2048
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D"]
+shape = SubResource( 1 )
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource( 2 )
+bus = "sound"
+
+[node name="DespawnTimer" type="Timer" parent="."]
+[connection signal="timeout" from="DespawnTimer" to="." method="_on_DespawnTimer_timeout"]

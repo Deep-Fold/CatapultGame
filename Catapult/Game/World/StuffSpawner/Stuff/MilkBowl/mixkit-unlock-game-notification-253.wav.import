@@ -1,0 +1,21 @@
+[remap]
+
+importer="wav"
+type="AudioStreamSample"
+path="res://.import/mixkit-unlock-game-notification-253.wav-af56617821b468588dd0f4c13d1c62fa.sample"
+
+[deps]
+
+source_file="res://Game/World/StuffSpawner/Stuff/MilkBowl/mixkit-unlock-game-notification-253.wav"
+dest_files=[ "res://.import/mixkit-unlock-game-notification-253.wav-af56617821b468588dd0f4c13d1c62fa.sample" ]
+
+[params]
+
+force/8_bit=false
+force/mono=false
+force/max_rate=false
+force/max_rate_hz=44100
+edit/trim=false
+edit/normalize=false
+edit/loop=false
+compress/mode=0

@@ -1,0 +1,124 @@
+[gd_scene load_steps=24 format=2]
+
+[ext_resource path="res://Game/World/StuffSpawner/Stuff/BaseStuff.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Game/World/StuffSpawner/Stuff/Booster/booster.png" type="Texture" id=2]
+[ext_resource path="res://Game/World/StuffSpawner/Stuff/Booster/Booster.gd" type="Script" id=3]
+[ext_resource path="res://Game/World/StuffSpawner/Stuff/Booster/booster.wav" type="AudioStream" id=4]
+[ext_resource path="res://Game/World/StuffSpawner/Stuff/Booster/launch.wav" type="AudioStream" id=5]
+
+[sub_resource type="AtlasTexture" id=1]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=2]
+atlas = ExtResource( 2 )
+region = Rect2( 16, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=3]
+atlas = ExtResource( 2 )
+region = Rect2( 32, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=4]
+atlas = ExtResource( 2 )
+region = Rect2( 48, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=5]
+atlas = ExtResource( 2 )
+region = Rect2( 64, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=6]
+atlas = ExtResource( 2 )
+region = Rect2( 80, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=7]
+atlas = ExtResource( 2 )
+region = Rect2( 96, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=8]
+atlas = ExtResource( 2 )
+region = Rect2( 112, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=9]
+atlas = ExtResource( 2 )
+region = Rect2( 48, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=10]
+atlas = ExtResource( 2 )
+region = Rect2( 32, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=11]
+atlas = ExtResource( 2 )
+region = Rect2( 16, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=12]
+atlas = ExtResource( 2 )
+region = Rect2( 0, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=13]
+atlas = ExtResource( 2 )
+region = Rect2( 112, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=14]
+atlas = ExtResource( 2 )
+region = Rect2( 96, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=15]
+atlas = ExtResource( 2 )
+region = Rect2( 80, 0, 16, 16 )
+
+[sub_resource type="AtlasTexture" id=16]
+atlas = ExtResource( 2 )
+region = Rect2( 64, 0, 16, 16 )
+
+[sub_resource type="SpriteFrames" id=17]
+animations = [ {
+"frames": [ SubResource( 1 ), SubResource( 2 ), SubResource( 3 ), SubResource( 4 ), SubResource( 5 ), SubResource( 6 ), SubResource( 7 ), SubResource( 8 ) ],
+"loop": true,
+"name": "idle",
+"speed": 5.0
+}, {
+"frames": [ SubResource( 9 ), SubResource( 10 ), SubResource( 11 ), SubResource( 12 ), SubResource( 13 ), SubResource( 14 ), SubResource( 15 ), SubResource( 16 ) ],
+"loop": true,
+"name": "charge",
+"speed": 15.0
+} ]
+
+[sub_resource type="CircleShape2D" id=18]
+radius = 8.0
+
+[node name="Booster" groups=[
+"booster",
+] instance=ExtResource( 1 )]
+script = ExtResource( 3 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="." index="5"]
+z_index = -1
+z_as_relative = false
+frames = SubResource( 17 )
+animation = "idle"
+frame = 5
+playing = true
+
+[node name="Area2D" type="Area2D" parent="." index="6"]
+collision_layer = 1024
+collision_mask = 1024
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2D" index="0"]
+shape = SubResource( 18 )
+
+[node name="BoostTimer" type="Timer" parent="." index="7"]
+one_shot = true
+
+[node name="AddMoney" type="Timer" parent="." index="8"]
+wait_time = 0.05
+one_shot = true
+
+[node name="AudioStreamPlayer2D" parent="." index="9"]
+stream = ExtResource( 4 )
+
+[node name="Launch" type="AudioStreamPlayer2D" parent="." index="10"]
+stream = ExtResource( 5 )
+volume_db = 10.0
+bus = "sound"
+[connection signal="timeout" from="BoostTimer" to="." method="_on_BoostTimer_timeout"]
+[connection signal="timeout" from="AddMoney" to="." method="_on_AddMoney_timeout"]

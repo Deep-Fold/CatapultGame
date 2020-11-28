@@ -1,0 +1,48 @@
+[gd_resource type="ShaderMaterial" load_steps=2 format=2]
+
+[sub_resource type="Shader" id=1]
+code = "shader_type canvas_item;
+render_mode blend_mix;
+
+uniform vec4 color : hint_color;
+uniform vec2 texture_size = vec2(58.0, 29.0);
+
+
+uniform float SIZE : hint_range(0, 50);
+
+float rand(vec2 coord) {
+	return fract(sin(dot(coord, vec2(35, 62)) * 1000.0) * 1000.0);
+}
+
+float noise(vec2 coord){
+	vec2 i = floor(coord);
+	vec2 f = fract(coord);
+
+	float a = rand(i);
+	float b = rand(i + vec2(1.0, 0.0));
+	float c = rand(i + vec2(0.0, 1.0));
+	float d = rand(i + vec2(1.0, 1.0));
+
+	vec2 cubic = f * f * (3.0 - 2.0 * f);
+
+	return mix(a, b, cubic.x) + (c - a) * cubic.y * (1.0 - cubic.x) + (d - b) * cubic.x * cubic.y;
+}
+
+void fragment() {
+	vec2 uv = floor(UV * texture_size)/texture_size;
+	vec4 col = color;
+	float n = noise((uv*SIZE) - vec2(TIME,0.0)*0.4);
+	n *= (1.5 - uv.y)*4.5;
+	n *= (0.5 - abs(uv.x-0.5))*0.45;
+
+	col.a *= step(1.0, mod(UV.y * texture_size.y, 2.0));
+	col.a *= step(0.45, n);
+	
+	COLOR = col;
+}"
+
+[resource]
+shader = SubResource( 1 )
+shader_param/color = Color( 0.984314, 0.960784, 0.937255, 1 )
+shader_param/texture_size = Vector2( 35, 29 )
+shader_param/SIZE = 9.714

@@ -1,0 +1,43 @@
+[gd_scene load_steps=7 format=2]
+
+[ext_resource path="res://Game/World/Catapult/Catapult.gd" type="Script" id=1]
+[ext_resource path="res://Game/World/Catapult/slingshot.png" type="Texture" id=2]
+[ext_resource path="res://Game/World/Catapult/holder.png" type="Texture" id=3]
+[ext_resource path="res://Game/World/Trampoline/wobble1.wav" type="AudioStream" id=4]
+
+[sub_resource type="CircleShape2D" id=1]
+
+[sub_resource type="AudioStreamRandomPitch" id=2]
+audio_stream = ExtResource( 4 )
+
+[node name="Catapult" type="Node2D"]
+script = ExtResource( 1 )
+__meta__ = {
+"_edit_group_": true
+}
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+
+[node name="Line2D" type="Line2D" parent="."]
+position = Vector2( 0, -34 )
+points = PoolVector2Array( -10, 0, 0, 0, 10, 0 )
+width = 1.5
+default_color = Color( 0.984314, 0.960784, 0.937255, 1 )
+
+[node name="PullStartBox" type="Area2D" parent="."]
+position = Vector2( 0, -34 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="PullStartBox"]
+shape = SubResource( 1 )
+
+[node name="Sprite" type="Sprite" parent="PullStartBox"]
+z_index = 1
+texture = ExtResource( 3 )
+
+[node name="Tween" type="Tween" parent="."]
+
+[node name="AudioStreamPlayer2D" type="AudioStreamPlayer2D" parent="."]
+stream = SubResource( 2 )
+bus = "sound"
+[connection signal="input_event" from="PullStartBox" to="." method="_on_PullStartBox_input_event"]

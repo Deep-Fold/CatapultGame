@@ -96,7 +96,7 @@ z_index = -1
 z_as_relative = false
 frames = SubResource( 17 )
 animation = "idle"
-frame = 5
+frame = 4
 playing = true
 
 [node name="Area2D" type="Area2D" parent="." index="6"]

@@ -270,7 +270,7 @@ position = Vector2( -10, 140 )
 
 [node name="AnimatedSprite" parent="Cats/Cat" index="1"]
 animation = "walking"
-frame = 1
+frame = 2
 
 [node name="Trampolines" type="Node2D" parent="."]
 
@@ -450,8 +450,8 @@ volume_db = 5.0
 bus = "sound"
 [connection signal="cat_falling" from="Camera2D" to="." method="_on_Camera2D_cat_falling"]
 [connection signal="change_height" from="Camera2D" to="." method="_on_Camera2D_change_height"]
-[connection signal="change_height" from="Camera2D" to="BounceLineDrawer" method="_on_Camera2D_change_height"]
 [connection signal="change_height" from="Camera2D" to="LaunchStuffSpawner" method="_on_Camera2D_change_height"]
+[connection signal="change_height" from="Camera2D" to="BounceLineDrawer" method="_on_Camera2D_change_height"]
 [connection signal="made_trampoline" from="BounceLineDrawer" to="." method="_on_BounceLineDrawer_made_trampoline"]
 [connection signal="remove_milk" from="BounceLineDrawer" to="." method="_on_BounceLineDrawer_remove_milk"]
 [connection signal="visual_change_milk" from="BounceLineDrawer" to="." method="_on_BounceLineDrawer_visual_change_milk"]

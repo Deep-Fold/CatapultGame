@@ -49,6 +49,9 @@ func _on_catapult_launch_cat(launch_vec):
 	$LaunchMusic.volume_db = 0
 
 func _on_camera_track_object_fallen():
+	for b in get_tree().get_nodes_in_group("booster"):
+		b.queue_free()
+	
 	_move_cam_down()
 	var cat = mousestate.get_held_cat()
 	height_achieved = cat.position.y

@@ -64,19 +64,18 @@ use_mipmaps = true
 extra_spacing_char = -2
 font_data = ExtResource( 16 )
 
+[sub_resource type="StyleBoxFlat" id=8]
+bg_color = Color( 0.6, 0.6, 0.6, 0 )
+
 [sub_resource type="StyleBoxFlat" id=9]
 bg_color = Color( 0.6, 0.6, 0.6, 0 )
 
 [sub_resource type="StyleBoxFlat" id=10]
 bg_color = Color( 0.6, 0.6, 0.6, 0 )
 
-[sub_resource type="StyleBoxFlat" id=11]
-bg_color = Color( 0.6, 0.6, 0.6, 0 )
+[sub_resource type="DynamicFont" id=11]
 
-[sub_resource type="DynamicFont" id=12]
-
-[sub_resource type="Animation" id=8]
-resource_name = "fade"
+[sub_resource type="Animation" id=12]
 tracks/0/type = "value"
 tracks/0/path = NodePath("CanvasLayer/Fade:modulate")
 tracks/0/interp = 1
@@ -375,10 +374,10 @@ margin_top = 16.0
 margin_right = 100.0
 margin_bottom = 24.0
 focus_mode = 0
-custom_styles/hover = SubResource( 9 )
-custom_styles/pressed = SubResource( 10 )
-custom_styles/normal = SubResource( 11 )
-custom_fonts/font = SubResource( 12 )
+custom_styles/hover = SubResource( 8 )
+custom_styles/pressed = SubResource( 9 )
+custom_styles/normal = SubResource( 10 )
+custom_fonts/font = SubResource( 11 )
 enabled_focus_mode = 0
 icon = ExtResource( 20 )
 __meta__ = {
@@ -391,10 +390,10 @@ margin_top = 8.0
 margin_right = 100.0
 margin_bottom = 16.0
 focus_mode = 0
-custom_styles/hover = SubResource( 9 )
-custom_styles/pressed = SubResource( 10 )
-custom_styles/normal = SubResource( 11 )
-custom_fonts/font = SubResource( 12 )
+custom_styles/hover = SubResource( 8 )
+custom_styles/pressed = SubResource( 9 )
+custom_styles/normal = SubResource( 10 )
+custom_fonts/font = SubResource( 11 )
 enabled_focus_mode = 0
 icon = ExtResource( 21 )
 __meta__ = {
@@ -420,7 +419,7 @@ __meta__ = {
 }
 
 [node name="EndAnimation" type="AnimationPlayer" parent="."]
-anims/fade = SubResource( 8 )
+anims/fade = SubResource( 12 )
 
 [node name="ResetWorld" type="Timer" parent="."]
 wait_time = 0.5
@@ -436,8 +435,8 @@ one_shot = true
 [connection signal="show_shop_tutorial" from="GameLayer/World" to="." method="_on_World_show_shop_tutorial"]
 [connection signal="show_trampoline_tutorial" from="GameLayer/World" to="." method="_on_World_show_trampoline_tutorial"]
 [connection signal="update_milk" from="GameLayer/World" to="UI/Control/MilkInfo" method="_on_World_update_milk"]
-[connection signal="pressed" from="UI/Control/ShopButton" to="UI/Control/ShopPanel" method="_on_ShopButton_pressed"]
 [connection signal="pressed" from="UI/Control/ShopButton" to="." method="_on_ShopButton_pressed"]
+[connection signal="pressed" from="UI/Control/ShopButton" to="UI/Control/ShopPanel" method="_on_ShopButton_pressed"]
 [connection signal="pressed" from="UI/AudioToggle" to="." method="_on_AudioToggle_pressed"]
 [connection signal="pressed" from="UI/MusicToggle" to="." method="_on_MusicToggle_pressed"]
 [connection signal="play_again" from="CanvasLayer/EndAnimation" to="." method="_on_EndAnimation_play_again"]
